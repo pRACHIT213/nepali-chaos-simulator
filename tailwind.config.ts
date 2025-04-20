@@ -61,6 +61,24 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
+				},
+				nepal: {
+					red: '#C8102E',
+					blue: '#003893',
+					DEFAULT: '#C8102E',
+					triangle: '#003893'
+				},
+				karma: {
+					good: '#7FFFD4',
+					bad: '#FF6B6B',
+					neutral: '#FFD700'
+				},
+				chaos: {
+					primary: '#9b87f5',
+					secondary: '#FF6B6B',
+					tertiary: '#FFD700',
+					dark: '#1A1F2C',
+					light: '#E5DEFF'
 				}
 			},
 			borderRadius: {

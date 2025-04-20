@@ -99,3 +99,129 @@
     @apply bg-background text-foreground;
   }
 }
+
+@keyframes glitch {
+  0% {
+    transform: translate(0);
+  }
+  20% {
+    transform: translate(-2px, 2px);
+  }
+  40% {
+    transform: translate(-2px, -2px);
+  }
+  60% {
+    transform: translate(2px, 2px);
+  }
+  80% {
+    transform: translate(2px, -2px);
+  }
+  100% {
+    transform: translate(0);
+  }
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+@keyframes pulse-nepal {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(200, 16, 46, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 0 15px rgba(200, 16, 46, 0);
+  }
+}
+
+@keyframes chaos-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes dimension-portal {
+  0% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  80% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@layer utilities {
+  .animation-glitch {
+    animation: glitch 0.3s ease-in-out infinite;
+  }
+  
+  .animation-float {
+    animation: float 6s ease-in-out infinite;
+  }
+  
+  .animation-pulse-nepal {
+    animation: pulse-nepal 2s infinite;
+  }
+  
+  .animation-chaos-spin {
+    animation: chaos-spin 8s linear infinite;
+  }
+  
+  .animation-portal {
+    animation: dimension-portal 0.5s ease-out forwards;
+  }
+  
+  .text-shadow-nepal {
+    text-shadow: 2px 2px 4px rgba(200, 16, 46, 0.5);
+  }
+  
+  .nepali-gradient {
+    background: linear-gradient(135deg, #C8102E 0%, #003893 100%);
+  }
+  
+  .glitch-text {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .glitch-text::before,
+  .glitch-text::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .glitch-text::before {
+    left: 2px;
+    text-shadow: -1px 0 #FF6B6B;
+    clip: rect(44px, 450px, 56px, 0);
+    animation: glitch 5s infinite linear alternate-reverse;
+  }
+  
+  .glitch-text::after {
+    left: -2px;
+    text-shadow: 1px 0 #7FFFD4;
+    clip: rect(44px, 450px, 56px, 0);
+    animation: glitch 5s infinite linear alternate-reverse;
+    animation-delay: 0.1s;
+  }
+}
