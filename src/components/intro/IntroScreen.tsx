@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { useNepalUnlocked } from '@/contexts/NepalUnlockedContext';
 import { Button } from "@/components/ui/button";
@@ -26,22 +25,10 @@ const IntroScreen = () => {
 
   const handleNameSubmit = () => {
     if (name.trim()) {
-      // Set the player name in the game state
+      // Set the player name in the game state and immediately change to character select
       dispatch({ type: 'SET_PLAYER_NAME', payload: name });
       
-      // Change the game phase to character selection
-      setTimeout(() => {
-        dispatch({ type: 'ADVANCE_DAY' });
-        dispatch({ type: 'ADVANCE_DAY' });
-        dispatch({ 
-          type: 'SELECT_CHARACTER', 
-          payload: { id: 'temp', name: 'temp', description: 'temp', karmaModifier: 0 } 
-        });
-        dispatch({ type: 'RESET_GAME' });
-        // This will actually change the game phase
-        dispatch({ type: 'ADVANCE_DAY' });
-        dispatch({ type: 'ADVANCE_DAY' });
-      }, 500);
+      // No need for the complex sequence - the SET_PLAYER_NAME action already sets gamePhase to 'character-select'
     }
   };
 
