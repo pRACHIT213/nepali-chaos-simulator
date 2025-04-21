@@ -6,6 +6,8 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { motion, AnimatePresence } from 'framer-motion';
 
+const NEPAL_IMAGE_URL = "https://images.unsplash.com/photo-1518495973542-4542c06a5843?auto=format&fit=crop&w=1050&q=80";
+
 const CharacterSelect = () => {
   const { state, dispatch } = useNepalUnlocked();
   const [selectedCharacter, setSelectedCharacter] = useState<RebirthCharacter | null>(null);
@@ -38,7 +40,19 @@ const CharacterSelect = () => {
   );
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center p-4 bg-gradient-to-b from-nepal-blue to-black">
+    <div className="min-h-screen flex flex-col items-center justify-center p-4 bg-gradient-to-b from-nepal-blue to-black relative overflow-x-hidden overflow-y-auto">
+      {/* Nepal landscape image banner */}
+      <div className="relative w-full max-w-5xl mx-auto mb-6">
+        <img 
+          src={NEPAL_IMAGE_URL}
+          alt="Beautiful mountains landscape in Nepal"
+          className="w-full h-60 object-cover rounded-lg shadow-lg"
+        />
+        {/* Overlay for subtle darkening */}
+        <div className="absolute inset-0 bg-black/30 rounded-lg pointer-events-none" />
+        <div className="absolute bottom-2 left-4 text-white text-xs font-medium bg-black/40 px-2 py-1 rounded">Photo: Nepal / Unsplash</div>
+      </div>
+
       <motion.h2 
         className="text-4xl font-bold mb-6 text-white"
         initial={{ opacity: 0, y: -20 }}
