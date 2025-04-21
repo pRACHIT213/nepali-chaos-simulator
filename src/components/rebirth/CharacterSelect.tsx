@@ -8,6 +8,16 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 const NEPAL_IMAGE_URL = "https://images.unsplash.com/photo-1518495973542-4542c06a5843?auto=format&fit=crop&w=1050&q=80";
 
+// Map character ids to Unsplash photo URLs for more fun visuals
+const CHARACTER_IMAGES: Record<string, string> = {
+  "goat-influencer": "https://images.unsplash.com/photo-1517022812141-23620dba5c23?auto=format&fit=crop&w=600&q=80", // sheep/goats in a field
+  "retired-neta-dj": "https://images.unsplash.com/photo-1526178613658-3b642d4214a7?auto=format&fit=crop&w=600&q=80", // DJ set / night party
+  "bhaktapur-statue": "https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=600&q=80", // statue in Nepal
+  "ai-palcha": "https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=600&q=80", // kitchen/chef
+  "traffic-jam": "https://images.unsplash.com/photo-1509228468518-180dd4864904?auto=format&fit=crop&w=600&q=80", // traffic in Kathmandu
+  "chiya-tapari": "https://images.unsplash.com/photo-1501286353178-1ec881214838?auto=format&fit=crop&w=600&q=80", // monkey (funny/chaotic!) holding a cup
+};
+
 const CharacterSelect = () => {
   const { state, dispatch } = useNepalUnlocked();
   const [selectedCharacter, setSelectedCharacter] = useState<RebirthCharacter | null>(null);
@@ -25,19 +35,20 @@ const CharacterSelect = () => {
   };
 
   const randomize = () => {
-    // Pick a random character
     const randomIndex = Math.floor(Math.random() * state.characters.length);
     const randomCharacter = state.characters[randomIndex];
     setSelectedCharacter(randomCharacter);
     setShowDetails(true);
   };
 
-  // Create a placeholder image with text when real images aren't available
-  const PlaceholderImage = ({ name }: { name: string }) => (
-    <div className="w-full h-40 bg-chaos-dark flex items-center justify-center text-center p-2 rounded-t-lg">
-      <span className="text-chaos-light font-bold">{name}</span>
-    </div>
-  );
+  // Helper to get Unsplash or fallback image
+  const getCharacterImage = (character: RebirthCharacter) => {
+    // Prefer local image if exists AND not empty, else Unsplash
+    if (character.image && !character.image.startsWith("/characters/placeholder")) {
+      return character.image;
+    }
+    return CHARACTER_IMAGES[character.id] ?? "";
+  };
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center p-4 bg-gradient-to-b from-nepal-blue to-black relative overflow-x-hidden overflow-y-auto">
@@ -97,17 +108,14 @@ const CharacterSelect = () => {
                 }`}
                 onClick={() => handleCharacterSelect(character)}
               >
-                {character.image ? (
-                  <div className="w-full h-40 overflow-hidden">
-                    <img 
-                      src={character.image} 
-                      alt={character.name} 
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                ) : (
-                  <PlaceholderImage name={character.name} />
-                )}
+                {/* Character image or Unsplash visual */}
+                <div className="w-full h-40 overflow-hidden">
+                  <img 
+                    src={getCharacterImage(character)}
+                    alt={character.name}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
                 
                 <div className="p-4">
                   <h3 className="text-xl font-bold mb-2">{character.name}</h3>
@@ -130,6 +138,7 @@ const CharacterSelect = () => {
         </AnimatePresence>
       </div>
 
+      {/* Details popup */}
       {showDetails && selectedCharacter && (
         <motion.div 
           className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70"
@@ -143,19 +152,14 @@ const CharacterSelect = () => {
             animate={{ scale: 1, y: 0 }}
             exit={{ scale: 0.9, y: 50 }}
           >
-            {selectedCharacter.image ? (
-              <div className="w-full h-48 overflow-hidden">
-                <img 
-                  src={selectedCharacter.image} 
-                  alt={selectedCharacter.name} 
-                  className="w-full h-full object-cover"
-                />
-              </div>
-            ) : (
-              <div className="w-full h-48 bg-chaos-dark flex items-center justify-center">
-                <span className="text-chaos-light font-bold text-2xl">{selectedCharacter.name}</span>
-              </div>
-            )}
+            {/* Large character image or Unsplash */}
+            <div className="w-full h-48 overflow-hidden">
+              <img 
+                src={getCharacterImage(selectedCharacter)}
+                alt={selectedCharacter.name}
+                className="w-full h-full object-cover"
+              />
+            </div>
             
             <div className="p-6">
               <h3 className="text-2xl font-bold mb-2">{selectedCharacter.name}</h3>
