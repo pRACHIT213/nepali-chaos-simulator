@@ -88,7 +88,8 @@ const gameReducer = (state: GameState, action: ActionType): GameState => {
     case 'SET_PLAYER_NAME':
       return {
         ...state,
-        playerName: action.payload
+        playerName: action.payload,
+        gamePhase: 'character-select'
       };
       
     case 'SELECT_CHARACTER':

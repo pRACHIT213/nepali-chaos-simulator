@@ -26,15 +26,22 @@ const IntroScreen = () => {
 
   const handleNameSubmit = () => {
     if (name.trim()) {
+      // Set the player name in the game state
       dispatch({ type: 'SET_PLAYER_NAME', payload: name });
-      dispatch({ type: 'ADVANCE_DAY' });
-      // Move to character selection
-      setShowNameInput(false);
-      dispatch({ type: 'ADVANCE_DAY' });
-      // Transition to character selection
+      
+      // Change the game phase to character selection
       setTimeout(() => {
         dispatch({ type: 'ADVANCE_DAY' });
-      }, 1000);
+        dispatch({ type: 'ADVANCE_DAY' });
+        dispatch({ 
+          type: 'SELECT_CHARACTER', 
+          payload: { id: 'temp', name: 'temp', description: 'temp', karmaModifier: 0 } 
+        });
+        dispatch({ type: 'RESET_GAME' });
+        // This will actually change the game phase
+        dispatch({ type: 'ADVANCE_DAY' });
+        dispatch({ type: 'ADVANCE_DAY' });
+      }, 500);
     }
   };
 
