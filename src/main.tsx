@@ -23,4 +23,14 @@ try {
   console.log("Application rendered successfully");
 } catch (error) {
   console.error("Failed to render application:", error);
+  
+  // Display error message on screen for better debugging
+  const errorDiv = document.createElement('div');
+  errorDiv.style.padding = '20px';
+  errorDiv.style.margin = '20px';
+  errorDiv.style.backgroundColor = '#ffeeee';
+  errorDiv.style.border = '1px solid red';
+  errorDiv.style.borderRadius = '5px';
+  errorDiv.innerHTML = `<h2>Error loading application</h2><pre>${error instanceof Error ? error.message : 'Unknown error'}</pre>`;
+  document.body.appendChild(errorDiv);
 }
